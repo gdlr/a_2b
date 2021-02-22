@@ -7,6 +7,22 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+# Recreate Possible Cars
+possible_cars = data.frame(
+  name = c("A","B","C","D"),
+  mass=c(10000,65000,38000,30000), 
+  area = c(22,30,22,10)
+  )
+
+# Creating the sample speeds with 
+# uniform distribution and values 
+# between 0.01 and 0.03
+
+highway_samples <- runif(100,0.01,0.03)
+
+```
+
 Does this work???
 
 Error checking:

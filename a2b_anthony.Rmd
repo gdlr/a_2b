@@ -1,0 +1,23 @@
+---
+title: "a2b"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Does this work???
+
+Error checking:
+
+for loop:
+
+pmap:
+
+```{r}
+
+```
+
+
+graphing:
