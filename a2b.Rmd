@@ -19,6 +19,7 @@ possible_cars = data.frame(
 # uniform distribution and values 
 # between 0.01 and 0.03
 
+set.seed(5)
 highway_samples <- runif(100,0.01,0.03)
 
 ```

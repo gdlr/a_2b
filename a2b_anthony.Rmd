@@ -5,8 +5,32 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
+library(tidyverse)
+library(janitor)
+library(kableExtra)
+library(scales)
+library(here)
+library(ggbeeswarm)
+library(car)
+library(here)
 
+source(here("R","power_gen.R"))
+```
+```{r}
+# Recreate Possible Cars
+possible_cars = data.frame(
+  name = c("A","B","C","D"),
+  mass=c(10000,65000,38000,30000), 
+  area = c(22,30,22,10)
+  )
+
+# Creating the sample speeds with 
+# uniform distribution and values 
+# between 0.01 and 0.03
+set.seed(5)
+highway_samples <- runif(100,0.01,0.03)
+
+```
 Does this work???
 
 Error checking:
@@ -15,8 +39,38 @@ for loop:
 
 pmap:
 
-```{r}
+```{r pmap_section}
 
+#Here is the pmap function
+all_croll_pmap_list <- pmap(
+# This list provides the independent variables that are like parameters
+  list(
+    A=possible_cars$area,
+    m=possible_cars$mass,
+    V=120/3.6
+    ),
+# This is the function used to calculate the dependent variable
+  power_gen,
+# This is the sample that acts as the random inputs for highway characteristics
+  crolling = highway_samples
+)
+
+
+all_croll_pmap <- as.data.frame(
+# The list made above is coerced into a data frame
+  all_croll_pmap_list,
+# Columns are the piece wise elements in the list
+  col.names=possible_cars$name
+) %>% 
+# pivot_longer to make the data play nice with ggplot
+  pivot_longer(everything(),names_to = "car",values_to = "power")
+
+# Here is the plot for later use with ggarrange
+all_croll_pmap_plot <- ggplot(data = all_croll_pmap, aes(car,power,fill=car)) +
+  geom_boxplot() +
+  ggtitle("pmap")
+
+all_croll_pmap_plot
 ```
 
 
